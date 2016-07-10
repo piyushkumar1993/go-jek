@@ -12,11 +12,28 @@ class Car{
 	}
 }
 
-class Main{
+class my_program{
 
 	public static void main(String args[])throws IOException{
-		BufferedReader ab=new BufferedReader(new InputStreamReader(System.in));
-		String commands[]={"create_parking_lot","park","leave","status","registration_numbers_of_cars_with_colour","slot_numbers_for_cars_with_colour","slot_number_for_registration_number"};
+		BufferedReader ab=null;
+		
+		PrintStream out=null;
+//System.out.println("ggg"+args.length);
+if(args.length==0){
+out=new PrintStream(System.out);
+ab=new BufferedReader(new InputStreamReader(System.in));
+}
+else{
+FileInputStream fin=new FileInputStream(args[0]);
+ab=new BufferedReader(new InputStreamReader(fin));
+FileOutputStream fout=new FileOutputStream(args[2],false);
+out=new PrintStream(fout);
+
+}
+
+
+
+String commands[]={"create_parking_lot","park","leave","status","registration_numbers_for_cars_with_colour","slot_numbers_for_cars_with_colour","slot_number_for_registration_number"};
 		int noOfSlots=0,noOfCars=0;String input="",command="";
 		while(!command.equals(commands[0])){
 			input=ab.readLine();input+=' ';
@@ -38,14 +55,14 @@ class Main{
 					temp=temp+c;
 			}
 			if(!command.equals(commands[0]))
-				System.out.println("Wrong command. Create parking lot first");
+				out.println("Wrong command. Create parking lot first");
 		}
-		System.out.println("Created a parking lot with "+noOfSlots+" slots");
+		out.println("Created a parking lot with "+noOfSlots+" slots");
 		Car cars[]=new Car[noOfSlots];
 		for(int j=0;j<noOfSlots;j++)
 			cars[j]=new Car();
-		while(!input.equals(" ")){
-			input=ab.readLine();input+=' ';
+		while((input=ab.readLine())!=null){
+			input+=' ';
 			String input1="",input2="",input3="",temp="";int i,flag=0;
 			for(i=0;i<input.length();i++){
 				char c=input.charAt(i);
@@ -81,7 +98,7 @@ class Main{
 			switch(commandPosition){
 				case 1:
 					if(noOfCars==noOfSlots){
-						System.out.println("Sorry, parking lot is full");
+						out.println("Sorry, parking lot is full");
 					}
 					else{
 
@@ -91,7 +108,7 @@ class Main{
 								cars[i].colour=input3;
 								cars[i].filled=true;
 								noOfCars++;
-								System.out.println("Allocated slot number: "+(i+1));
+								out.println("Allocated slot number: "+(i+1));
 								break;
 							}
 						}
@@ -102,7 +119,7 @@ class Main{
 					int carToLeave=Integer.parseInt(input2);
 					carToLeave--;
 					if(carToLeave<noOfSlots){
-						System.out.println("Slot number "+(carToLeave+1)+" is free");
+						out.println("Slot number "+(carToLeave+1)+" is free");
 						if(cars[carToLeave].filled){
 							cars[carToLeave].filled=false;
 							noOfCars--;
@@ -110,11 +127,11 @@ class Main{
 					}
 					break;			
 				case 3:
-					System.out.println("Slot No.\tRegistration No\tColour");
+					out.println("Slot No.\tRegistration No\tColour");
 					for(i=0;i<noOfSlots;i++){
 						if(!cars[i].filled)
 							continue;
-						System.out.println((i+1)+"\t"+cars[i].reg_no+"\t"+cars[i].colour);
+						out.println((i+1)+"\t"+cars[i].reg_no+"\t"+cars[i].colour);
 					}
 					break;
 
@@ -123,43 +140,43 @@ class Main{
 					for(i=0;i<noOfSlots;i++){
 						if(cars[i].colour.equalsIgnoreCase(input2)&&cars[i].filled){
 							if(flag2==0){
-								System.out.print(cars[i].reg_no);
+								out.print(cars[i].reg_no);
 								flag2=1;
 							}
 							else
-								System.out.print(", "+cars[i].reg_no);
+								out.print(", "+cars[i].reg_no);
 						}
 					}
-					System.out.println("");
+					out.println("");
 					break;
 				case 5:
 					flag2=0;
 					for(i=0;i<noOfSlots;i++){
 						if(cars[i].colour.equalsIgnoreCase(input2)&&cars[i].filled){
 							if(flag2==0){
-								System.out.print((i+1));
+								out.print((i+1));
 								flag2=1;
 							}
 							else
-								System.out.print(", "+(i+1));
+								out.print(", "+(i+1));
 						}
 					}
-					System.out.println("");
+					out.println("");
 					break;
 
 				case 6:
 					flag2=0;
 					for(i=0;i<noOfSlots;i++){
 						if(cars[i].filled && cars[i].reg_no.equals(input2)){
-							System.out.println((i+1));flag2=1;break;
+							out.println((i+1));flag2=1;break;
 						}
 					}
 					if(flag2==0)
-						System.out.println("Not found");
+						out.println("Not found");
 					break;
 				default: 
 					if(!input.equals(" "))
-						System.out.println("Wrong command");
+						out.println("Wrong command");
 
 			}
 
