@@ -98,37 +98,68 @@ class Main{
 					}
 					break;
 
-case 2:
-int carToLeave=Integer.parseInt(input2);
-carToLeave--;
-if(carToLeave<noOfSlots){
-System.out.println("Slot number "+(carToLeave+1)+" is free");
-if(cars[carToLeave].filled){
-cars[carToLeave].filled=false;
-noOfCars--;
-}
-}
-break;			
-case 3:
-System.out.println("Slot No.\tRegistration No\tColour");
-for(i=0;i<noOfSlots;i++){
-if(!cars[i].filled)
-continue;
-System.out.println((i+1)+"\t"+cars[i].reg_no+"\t"+cars[i].colour);
-}
-break;
+				case 2:
+					int carToLeave=Integer.parseInt(input2);
+					carToLeave--;
+					if(carToLeave<noOfSlots){
+						System.out.println("Slot number "+(carToLeave+1)+" is free");
+						if(cars[carToLeave].filled){
+							cars[carToLeave].filled=false;
+							noOfCars--;
+						}
+					}
+					break;			
+				case 3:
+					System.out.println("Slot No.\tRegistration No\tColour");
+					for(i=0;i<noOfSlots;i++){
+						if(!cars[i].filled)
+							continue;
+						System.out.println((i+1)+"\t"+cars[i].reg_no+"\t"+cars[i].colour);
+					}
+					break;
+
+				case 4: 
+					int flag2=0;
+					for(i=0;i<noOfSlots;i++){
+						if(cars[i].colour.equalsIgnoreCase(input2)&&cars[i].filled){
+							if(flag2==0){
+								System.out.print(cars[i].reg_no);
+								flag2=1;
+							}
+							else
+								System.out.print(", "+cars[i].reg_no);
+						}
+					}
+					System.out.println("");
+					break;
+				case 5:
+					flag2=0;
+					for(i=0;i<noOfSlots;i++){
+						if(cars[i].colour.equalsIgnoreCase(input2)&&cars[i].filled){
+							if(flag2==0){
+								System.out.print((i+1));
+								flag2=1;
+							}
+							else
+								System.out.print(", "+(i+1));
+						}
+					}
+					System.out.println("");
+					break;
+
+				
 
 				default: 
 					if(!input.equals(" "))
-							System.out.println("Wrong command");
+						System.out.println("Wrong command");
 
-							}
-
-
-							}
+			}
 
 
+		}
 
 
-							}
-							}
+
+
+	}
+}
