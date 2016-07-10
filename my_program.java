@@ -147,8 +147,16 @@ class Main{
 					System.out.println("");
 					break;
 
-				
-
+				case 6:
+					flag2=0;
+					for(i=0;i<noOfSlots;i++){
+						if(cars[i].filled && cars[i].reg_no.equals(input2)){
+							System.out.println((i+1));flag2=1;break;
+						}
+					}
+					if(flag2==0)
+						System.out.println("Not found");
+					break;
 				default: 
 					if(!input.equals(" "))
 						System.out.println("Wrong command");
