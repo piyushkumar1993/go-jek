@@ -1,6 +1,6 @@
 import java.io.*;
 class Car{
-	String reg_no,colour;boolean free;
+	String reg_no,colour;boolean filled;
 	public Car(String r,String c){
 		reg_no=r;
 		colour=c;
@@ -8,7 +8,7 @@ class Car{
 	public Car(){
 		reg_no="";
 		colour="";
-		free=false;
+		filled=false;
 	}
 }
 
@@ -86,17 +86,38 @@ class Main{
 					else{
 
 						for(i=0;i<noOfSlots;i++){
-							if(!cars[i].free){
+							if(!cars[i].filled){
 								cars[i].reg_no=input2;
 								cars[i].colour=input3;
-								cars[i].free=true;
+								cars[i].filled=true;
 								noOfCars++;
-								System.out.println("Allocated slot number: "+i);
+								System.out.println("Allocated slot number: "+(i+1));
 								break;
 							}
 						}
 					}
 					break;
+
+case 2:
+int carToLeave=Integer.parseInt(input2);
+carToLeave--;
+if(carToLeave<noOfSlots){
+System.out.println("Slot number "+(carToLeave+1)+" is free");
+if(cars[carToLeave].filled){
+cars[carToLeave].filled=false;
+noOfCars--;
+}
+}
+break;			
+case 3:
+System.out.println("Slot No.\tRegistration No\tColour");
+for(i=0;i<noOfSlots;i++){
+if(!cars[i].filled)
+continue;
+System.out.println((i+1)+"\t"+cars[i].reg_no+"\t"+cars[i].colour);
+}
+break;
+
 				default: 
 					if(!input.equals(" "))
 							System.out.println("Wrong command");
